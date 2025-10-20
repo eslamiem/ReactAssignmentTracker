@@ -10,17 +10,22 @@ type Props = {
 
 export function Header({ setAssignments }: Props) {
   const [text, setText] = useState("");
+  
+  const isTitleEmpty = text.trim().length === 0;
+
   const handleCreate = (e: React.FormEvent) => {
     e.preventDefault();
- setAssignments((assignments) => [
-      ...assignments, 
-      {
-        id: crypto.randomUUID(),
-        title: text,
-        completed: false,
-      },
-    ]);
-    setText("");
+    if (!isTitleEmpty) {
+      setAssignments((assignments) => [
+        ...assignments, 
+        {
+          id: crypto.randomUUID(),
+          title: text,
+          completed: false,
+        },
+      ]);
+      setText("");
+    }
   }
 
   return (
@@ -29,7 +34,7 @@ export function Header({ setAssignments }: Props) {
       <h1>{uppercase("bcit")} Assignment Tracker</h1>
       <form className={styles.newAssignmentForm} onSubmit={(e) => handleCreate(e)}>
         <input value={text} onChange={(e) => setText(e.target.value)} placeholder="Add a new assignment" type="text" />
-        <button>
+        <button disabled={isTitleEmpty}>
           Create <AiOutlinePlusCircle size={20} />
         </button>
       </form>

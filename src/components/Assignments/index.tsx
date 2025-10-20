@@ -5,9 +5,10 @@ import styles from "./assignments.module.css";
 type Props = {
   assignments: TAssignment[];
   onDelete: (id: string) => void; 
+  onToggleCompletion: (id: string) => void;
 };
 
-export function Assignments({ assignments, onDelete }: Props) {
+export function Assignments({ assignments, onDelete, onToggleCompletion }: Props) {
   const completedCount = assignments.filter(a => a.completed).length;
   const totalCount = assignments.length;
   
@@ -33,6 +34,7 @@ export function Assignments({ assignments, onDelete }: Props) {
             title={assignment.title} 
             completed={assignment.completed}  
             onDelete={onDelete} 
+            onToggleCompletion={onToggleCompletion}
           />
         ))}
       </div>

@@ -1,30 +1,27 @@
 import styles from "./assignment.module.css";
-import { TbTrash } from "react-icons/tb";
+import { TbTrash, TbCircleCheckFilled, TbCircle } from "react-icons/tb";
 
-// Define the new Props interface including the id and onDelete handler
 type Props = {
-  id: string; // Add ID so we know which assignment to delete
+  id: string; 
   title: string;
   completed: boolean;
-  onDelete: (id: string) => void; // Function to call when delete button is clicked
-  onToggleCompletion: (id: string) => void; // Add handler for future completion toggle
+  onDelete: (id: string) => void; 
+  onToggleCompletion: (id: string) => void; 
 };
 
 export function Assignment({ id, title, completed, onDelete, onToggleCompletion }: Props ) {
   return (
     <div className={styles.assignment}>
-      {/* Connect this button to onToggleCompletion */}
       <button 
         className={styles.checkContainer} 
-        onClick={() => onToggleCompletion(id)} // Applying the toggle function here
+        onClick={() => onToggleCompletion(id)} 
         aria-label={completed ? "Mark as incomplete" : "Mark as complete"}
       >
-        <div className={completed ? styles.checkedIcon : styles.uncheckedCircle} />
+        {completed ? (<TbCircleCheckFilled size={18} />) : (<TbCircle size={18} />)}
       </button>
 
       <p className={completed ? styles.textCompleted : ''}>{title}</p>
 
-      {/* Attach the onDelete handler and pass the assignment's ID */}
       <button 
         className={styles.deleteButton} 
         onClick={() => onDelete(id)}
